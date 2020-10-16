@@ -7,6 +7,7 @@
     <groupId>org.xsmart4j</groupId>
     <artifactId>xsmart</artifactId>
     <version>1.0.0</version>
+    <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,14 +47,14 @@
                 </configuration>
             </plugin>
             <!-- Tomcat -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <path>/${project.artifactId}</path>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.tomcat.maven</groupId>-->
+<!--                <artifactId>tomcat7-maven-plugin</artifactId>-->
+<!--                <version>2.2</version>-->
+<!--                <configuration>-->
+<!--                    <path>/${project.artifactId}</path>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
 
         </plugins>

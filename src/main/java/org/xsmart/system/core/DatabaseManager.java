@@ -1,17 +1,16 @@
-package org.xsmart.core.helper;
+package org.xsmart.system.core;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.xsmart.core.util.PropsUtil;
+import org.xsmart.system.util.PropsUtil;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
-public class DatabaseHelper {
+public class DatabaseManager {
 
     private static final ThreadLocal<Connection> CONNECTION_HOLDER = new ThreadLocal<Connection>();
     private static final QueryRunner QUERYRUNNER = new QueryRunner();

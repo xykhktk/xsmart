@@ -1,4 +1,4 @@
-package org.xsmart.core.util;
+package org.xsmart.system.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

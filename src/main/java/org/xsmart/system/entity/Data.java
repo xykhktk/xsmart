@@ -1,4 +1,4 @@
-package org.xsmart.bean;
+package org.xsmart.system.entity;
 
 public class Data {
 

@@ -29,7 +29,7 @@ public class BeanContainerBuilder {
         return (T) BEAN_MAP.get(clz);
     }
 
-    public void setBeanMap(Class<?> clz,Object o){
+    public static void setBeanMap(Class<?> clz,Object o){
         BEAN_MAP.put(clz,o);
     }
 }

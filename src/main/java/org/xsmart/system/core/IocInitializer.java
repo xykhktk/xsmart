@@ -33,7 +33,6 @@ public class IocInitializer {
                         ReflectionUtil.setField(beanInstance, beanFiled, autoWireInstance);
                     }
                 }
-
             }
         }
 

@@ -36,7 +36,7 @@ public class AspectProxy implements Proxy{
     }
 
     public boolean intercept(Class<?> clz, Method method,Object[] params) throws Throwable{
-        return false;
+        return true;
     }
 
     public void before(Class<?> clz, Method method,Object[] params) throws Throwable{

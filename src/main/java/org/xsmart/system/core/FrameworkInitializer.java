@@ -8,6 +8,7 @@ public class FrameworkInitializer {
         Class<?>[] initClasses = {
                 ClassContainerBuilder.class,
                 BeanContainerBuilder.class,
+                AopInitializer.class,
                 IocInitializer.class,
                 ControllerContainerBuilder.class,
         };

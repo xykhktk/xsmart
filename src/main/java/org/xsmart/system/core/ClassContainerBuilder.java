@@ -11,8 +11,8 @@ public class ClassContainerBuilder {
 
     private static HashSet<Class<?>> CLASS_CONTAINER = new HashSet<>();
 
-    static {
-        //todo 暂时写死
+    public void init(){
+        //        todo 暂时写死
         CLASS_CONTAINER = ClassUtil.addPackageClass("org.xsmart");
     }
 

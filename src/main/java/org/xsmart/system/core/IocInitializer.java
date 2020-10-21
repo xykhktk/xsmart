@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class IocInitializer {
 
-    static {
+    public void init(){
         Map<Class<?>,Object> bean_container =  BeanContainerBuilder.getBeanContainer();
 
         if (!bean_container.isEmpty()) {
@@ -35,7 +35,6 @@ public class IocInitializer {
                 }
             }
         }
-
     }
 
 }

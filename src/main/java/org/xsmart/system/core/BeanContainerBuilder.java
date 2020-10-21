@@ -10,7 +10,7 @@ public class BeanContainerBuilder {
 
     private static Map<Class<?>,Object> BEAN_MAP = new HashMap<>();
 
-    static {
+    public void init(){
         HashSet<Class<?>> classSet = ClassContainerBuilder.getBeans();
         for(Class<?> clz : classSet){
             Object o = ReflectionUtil.getInstance(clz);

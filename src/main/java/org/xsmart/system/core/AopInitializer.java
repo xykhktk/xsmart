@@ -11,7 +11,7 @@ import java.util.*;
 
 public class AopInitializer {
 
-    static {
+    public void init(){
         Map<Class<?>,Set<Class<?>>> proxyMap = createProxyMap();
         try {
             Map<Class<?>, List<Proxy>> targetClassAndProxyObjectMap = createTargetMap(proxyMap);
@@ -30,7 +30,7 @@ public class AopInitializer {
     private static Set<Class<?>> creatTargetClassSet(Aspect aspect){
         Set<Class<?>> result = new HashSet<>();
         Class<? extends Annotation> annotation = aspect.value();
-        if(annotation != null && annotation.equals(Aspect.class)){
+        if(annotation != null && !annotation.equals(Aspect.class)){
             result.addAll(ClassContainerBuilder.getClassSetByAnnotation(annotation));
         }
         return result;

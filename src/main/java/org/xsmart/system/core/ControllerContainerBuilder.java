@@ -13,7 +13,7 @@ public class ControllerContainerBuilder {
 
     private static Map<Request, Handler> REQUEST_HANDLER_MAP = new HashMap<>();
 
-    static {
+    public void init(){
         HashSet<Class<?>> classSet = ClassContainerBuilder.getControllerClass();
         if(!classSet.isEmpty()){
             for(Class<?> clz : classSet){
@@ -48,7 +48,6 @@ public class ControllerContainerBuilder {
             }
 
         }
-
     }
 
     public static Map<Request, Handler> getRequestHandlerMap(){

@@ -18,7 +18,7 @@ public class DatabaseManager {
 
 
     static {
-        Properties properties = PropsUtil.loadPropFile("/config.properties");
+        Properties properties = PropsUtil.loadPropFile("config.properties");
         String DRIVER = PropsUtil.getString(properties,"jdbc.driver");
         String USERNAME = PropsUtil.getString(properties,"jdbc.username");
         String PASSWORD = PropsUtil.getString(properties,"jdbc.password");

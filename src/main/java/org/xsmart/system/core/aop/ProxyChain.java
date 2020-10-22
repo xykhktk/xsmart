@@ -42,7 +42,7 @@ public class ProxyChain {
         Object result;
         if(index < proxyList.size())
         {
-            result = proxyList.get(index).doProxy(this);
+            result = proxyList.get(index++).doProxy(this);
         }else {
             result = methodProxy.invokeSuper(targetObject,methodParams);
         }

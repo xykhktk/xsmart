@@ -3,7 +3,6 @@ package org.xsmart.system.core.aop;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProxyChain {
@@ -14,7 +13,7 @@ public class ProxyChain {
     private MethodProxy methodProxy;
     private Object[] methodParams;
 
-    private List<Proxy> proxyList = new ArrayList<>();
+    private List<Proxy> proxyList;
     private int index;
 
     public ProxyChain(Class<?> targetClass, Object targetObject, Method method, MethodProxy methodProxy, Object[] methodParams, List<Proxy> proxyList) {

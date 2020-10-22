@@ -1,5 +1,8 @@
 package org.xsmart.system.util;
 
+import org.apache.log4j.Logger;
+import org.xsmart.system.core.DatabaseManager;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -12,6 +15,7 @@ import java.util.jar.JarFile;
 
 public class ClassUtil {
 
+    private static Logger logger = Logger.getLogger(ClassUtil.class);
     private static HashSet<Class<?>> resultSet = new HashSet<>();
 
     public static Class<?> loadClass(String className){
@@ -23,7 +27,7 @@ public class ClassUtil {
         try {
             object = Class.forName(className,initialize,Thread.currentThread().getContextClassLoader());
         } catch (ClassNotFoundException e) {
-            // todo log
+            logger.error("ClassUtil loadClass error :" + e.getMessage());
             e.printStackTrace();
         }
         return object;

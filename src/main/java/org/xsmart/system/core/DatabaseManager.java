@@ -3,6 +3,8 @@ package org.xsmart.system.core;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.log4j.Logger;
+import org.xsmart.aspect.ControllerAspect;
 import org.xsmart.system.util.PropsUtil;
 
 import java.sql.Connection;
@@ -12,6 +14,7 @@ import java.util.Properties;
 
 public class DatabaseManager {
 
+    private static Logger logger = Logger.getLogger(DatabaseManager.class);
     private static final ThreadLocal<Connection> CONNECTION_HOLDER = new ThreadLocal<Connection>();
     private static final QueryRunner QUERYRUNNER = new QueryRunner();
     private static final BasicDataSource basicDataSource;
@@ -26,7 +29,7 @@ public class DatabaseManager {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            //todo 抛异常、日志
+            logger.error("DatabaseManager init error :" + e.getMessage());
             e.printStackTrace();
         }
 
@@ -57,9 +60,9 @@ public class DatabaseManager {
         if(connection != null){
             try {
                 connection.close();
-            } catch (SQLException throwables) {
-                //todo 日志
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                logger.error("DatabaseManager closeConnection error :" + e.getMessage());
+                e.printStackTrace();
             } finally {
                 CONNECTION_HOLDER.remove();
             }
@@ -67,13 +70,13 @@ public class DatabaseManager {
         }
     }
 
-    public static <T> List<T> queruEntityList(String sql,Class<T> entityClass,Object... params){
+    public static <T> List<T> queryEntityList(String sql, Class<T> entityClass, Object... params){
         List<T> entityList = null;
         Connection connection = getConnection();
         try {
             entityList = QUERYRUNNER.query(connection,sql,new BeanListHandler<T>(entityClass),params);
         } catch (SQLException throwables) {
-            //todo 日志
+            logger.error("DatabaseManager queryEntityList error :" + throwables.getMessage());
             throwables.printStackTrace();
         }
         return entityList;

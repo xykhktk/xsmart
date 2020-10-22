@@ -1,11 +1,15 @@
 package org.xsmart.system.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class PropsUtil {
+
+    private static Logger logger = Logger.getLogger(PropsUtil.class);
 
     public static Properties loadPropFile(String fileName){
         Properties properties = null;
@@ -19,14 +23,14 @@ public class PropsUtil {
             properties = new Properties();
             properties.load(propFileInputStream);
         } catch (IOException e){
-            //todo 记录日志
+            logger.error("PropsUtil loadPropFile error :" + e.getMessage());
         }finally {
             if(propFileInputStream != null){
                 try {
                     propFileInputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    //todo 记录日志
+                    logger.error("PropsUtil close inputStream error :" + e.getMessage());
                 }
             }
         }

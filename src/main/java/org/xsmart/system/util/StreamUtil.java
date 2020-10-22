@@ -1,8 +1,12 @@
 package org.xsmart.system.util;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 
 public class StreamUtil {
+
+    private static Logger logger = Logger.getLogger(StreamUtil.class);
 
     public static String getString(InputStream is){
 
@@ -14,7 +18,7 @@ public class StreamUtil {
                 stringBuilder.append(line);
             }
         }catch (IOException e){
-            // todo log
+            logger.error("StreamUtil getString error :" + e.getMessage());
         }
         return stringBuilder.toString();
     }

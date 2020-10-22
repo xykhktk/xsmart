@@ -1,8 +1,13 @@
 package org.xsmart.system.core.aop;
 
+import org.apache.log4j.Logger;
+import org.xsmart.system.util.ClassUtil;
+
 import java.lang.reflect.Method;
 
 public class AspectProxy implements Proxy{
+
+    private static Logger logger = Logger.getLogger(ClassUtil.class);
 
     @Override
     public Object doProxy(ProxyChain proxyChain) throws Throwable {
@@ -21,7 +26,7 @@ public class AspectProxy implements Proxy{
                 result = proxyChain.doProxyChain();
             }
         }catch (Exception e){
-            //todo log
+            logger.error("AspectProxy doProxy error :" + e.getMessage());
             error(clz,method,params);
         }finally {
             end();

@@ -11,7 +11,7 @@ public class UserService {
 
     public List<User> list(){
         String sql = "select * from user";
-        return DatabaseManager.queruEntityList(sql, User.class);
+        return DatabaseManager.queryEntityList(sql, User.class);
     }
 
 }

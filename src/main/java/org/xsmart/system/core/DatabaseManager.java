@@ -2,6 +2,7 @@ package org.xsmart.system.core;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.log4j.Logger;
 import org.xsmart.aspect.ControllerAspect;
@@ -81,5 +82,32 @@ public class DatabaseManager {
         }
         return entityList;
     }
+
+    public static <T> T queryEntity(String sql, Class<T> entityClass, Object... params){
+        T entity = null;
+        Connection connection = getConnection();
+        try {
+            entity = QUERYRUNNER.query(connection,sql,new BeanHandler<T>(entityClass),params);
+        } catch (SQLException throwables) {
+            logger.error("DatabaseManager queryEntity error :" + throwables.getMessage());
+            throwables.printStackTrace();
+        }
+        return entity;
+    }
+
+    public static int update(String sql, Object... params){
+        int affectedRow = 0;
+        Connection connection = getConnection();
+        try {
+            affectedRow = QUERYRUNNER.update(connection,sql,params);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return affectedRow;
+    }
+
+
+
+
 
 }

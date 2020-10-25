@@ -13,17 +13,23 @@ import java.util.List;
 public class UserController {
 
     @Action(value = "get:/userList")
-    public Data list(RequestParams requestParams){
-        try{
-            UserService userService =  new UserService();
-            List<User> list = userService.list();
-            Data data = new Data();
-            data.setModel(list);
-            return data;
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return new Data();
+    public Data list(RequestParams requestParams) {
+        UserService userService = new UserService();
+        List<User> list = userService.list();
+        Data data = new Data();
+        data.setModel(list);
+        return data;
+    }
+
+    @Action(value = "post:/userAdd")
+    public Data add(RequestParams requestParams){
+        String name = (String)requestParams.getParams().get("name");
+        String phone = (String)requestParams.getParams().get("phone");
+
+        UserService userService = new UserService();
+        boolean result = userService.add(name,phone);
+        Data data = new Data();
+        return data;
     }
 
 }

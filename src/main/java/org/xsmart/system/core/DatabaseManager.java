@@ -11,10 +11,7 @@ import org.xsmart.system.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class DatabaseManager {
 
@@ -98,6 +95,12 @@ public class DatabaseManager {
         return entity;
     }
 
+    /**
+     * 多表联查
+     * @param sql
+     * @param params
+     * @return
+     */
     public static List<Map<String,Object>> execQuery(String sql, Object... params){
         List<Map<String,Object>> result = null;
         Connection connection = getConnection();
@@ -108,17 +111,6 @@ public class DatabaseManager {
             throwables.printStackTrace();
         }
         return result;
-    }
-
-    public static int update(String sql, Object... params){
-        int affectedRow = 0;
-        Connection connection = getConnection();
-        try {
-            affectedRow = QUERYRUNNER.update(connection,sql,params);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return affectedRow;
     }
 
     public static int execUpdate(String sql,Object... params){
@@ -154,5 +146,25 @@ public class DatabaseManager {
         return clz.getSimpleName().toLowerCase();
     }
 
+    public static <T> boolean updateEntityById(Class<T> clz,Map<String,Object> fieldValueMap,long id){
+
+        StringBuilder sql = new StringBuilder("update ");
+        sql.append(getTableName(clz)).append(" set ");
+        for(String fieldName : fieldValueMap.keySet()){
+            sql.append("`").append(fieldName).append("`").append("=?,");
+        }
+        sql.delete(sql.length() - 1,sql.length()).append(" where id = ?");
+
+        List<Object> paramsList = new ArrayList<>();
+        paramsList.addAll(fieldValueMap.values());
+        paramsList.add(id);
+        Object[] params = paramsList.toArray();
+        return execUpdate(sql.toString(),params) == 1;
+    }
+
+    public static <T> boolean deleteEntityById(Class<T> clz,long id){
+        String sql = "delete from " + getTableName(clz) + " where id = ?";
+        return execUpdate(sql,id) == 1;
+    }
 
 }

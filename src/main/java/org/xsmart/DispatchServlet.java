@@ -36,10 +36,7 @@ public class DispatchServlet extends HttpServlet {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
             PrintWriter writer = resp.getWriter();
-            Data data = new Data();
-            Map<String,String> error = new HashMap<>();
-            error.put("message","handler not found");
-            data.setModel(error);
+            Data data = Data.error("handler not found");
             writer.write(JsonUtil.objectToJsonString(data));
             return;
         }

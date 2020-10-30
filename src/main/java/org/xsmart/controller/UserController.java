@@ -1,7 +1,7 @@
 package org.xsmart.controller;
 
+import org.xsmart.system.annotation.Autowire;
 import org.xsmart.system.annotation.Controller;
-import org.xsmart.system.annotation.GetMapping;
 import org.xsmart.system.annotation.PostMapping;
 import org.xsmart.system.annotation.RequestMapping;
 import org.xsmart.system.entity.Data;
@@ -15,9 +15,13 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
 
+    @Autowire
+    private UserService userService;
+
     @PostMapping(value = "/userList")
     public Data list(RequestParams requestParams) {
-        UserService userService = new UserService();
+        UserService userService2 = userService;
+
         List<User> list = userService.list();
         return Data.success("获取列表成功").putData("list",list);
     }
@@ -25,7 +29,6 @@ public class UserController {
     @PostMapping(value = "/userInfo")
     public Data info(RequestParams requestParams) {
         long id = Long.parseLong ((String) requestParams.getParams().get("id"));
-        UserService userService = new UserService();
         User userInfo = userService.info(id);
         if(userInfo == null){
             return Data.error("获取详情失败");
@@ -38,7 +41,6 @@ public class UserController {
         String name = (String)requestParams.getParams().get("name");
         String phone = (String)requestParams.getParams().get("phone");
 
-        UserService userService = new UserService();
         boolean result = userService.add(name,phone);
         if(!result){
             return Data.error("添加失败");
@@ -52,7 +54,6 @@ public class UserController {
         String name = (String) requestParams.getParams().get("name");
         String phone = (String) requestParams.getParams().get("phone");
 
-        UserService userService = new UserService();
         boolean result = userService.update(id, name, phone);
         if(!result){
             return Data.error("更新失败");
@@ -64,7 +65,6 @@ public class UserController {
     public Data delete(RequestParams requestParams) {
         long id = Long.parseLong ((String) requestParams.getParams().get("id"));
 
-        UserService userService = new UserService();
         boolean result = userService.delete(id);
         if(!result){
             return Data.error("删除失败");

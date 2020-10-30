@@ -1,10 +1,14 @@
 package org.xsmart.system.util;
 
+import org.apache.log4j.Logger;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ReflectionUtil {
+
+    private static Logger logger = Logger.getLogger(PropsUtil.class);
 
     public static Object getInstance(Class<?> clazz){
         Object instance = new Object();
@@ -27,11 +31,12 @@ public class ReflectionUtil {
         return invokeResult;
     }
 
-    public static void setField(Object object, Field field,Object... arg){
-        field.setAccessible(true);
+    public static void setField(Object object, Field field,Object arg){
         try {
+            field.setAccessible(true);
             field.set(object,arg);
         } catch (IllegalAccessException e) {
+            logger.error("ReflectionUtil setField error :" + e.getMessage());
             e.printStackTrace();
         }
     }

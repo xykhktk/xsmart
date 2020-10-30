@@ -16,7 +16,7 @@ public class IocInitializer {
 
                 Class<?> clz = beanEntry.getKey();
                 Object beanInstance = beanEntry.getValue();
-                Field[] fields = clz.getFields();
+                Field[] fields = clz.getDeclaredFields();
 
                 if (fields.length == 0) {
                     continue;

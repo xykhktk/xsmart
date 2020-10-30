@@ -1,6 +1,8 @@
 package org.xsmart.system.core;
 
-import org.xsmart.system.annotation.Action;
+import org.xsmart.system.annotation.GetMapping;
+import org.xsmart.system.annotation.PostMapping;
+import org.xsmart.system.annotation.RequestMapping;
 import org.xsmart.system.entity.Handler;
 import org.xsmart.system.entity.Request;
 
@@ -15,34 +17,39 @@ public class ControllerContainerBuilder {
 
     public void init(){
         HashSet<Class<?>> classSet = ClassContainerBuilder.getControllerClass();
-        if(!classSet.isEmpty()){
-            for(Class<?> clz : classSet){
+        if (!classSet.isEmpty()) {
+            for (Class<?> clz : classSet) {
                 Method[] classMethods = clz.getMethods();
-                if(classMethods.length == 0) continue;;
+                if (classMethods.length == 0) continue;
 
-                for (Method method : classMethods){
+                String classRequestPath = "";
+                if (clz.isAnnotationPresent(RequestMapping.class)) {
+                    RequestMapping requestMapping = clz.getAnnotation(RequestMapping.class);
+                    classRequestPath = requestMapping.value();
+                }
 
-                    if (!method.isAnnotationPresent(Action.class)){
+                for (Method method : classMethods) {
+
+                    String requestMethod = "";
+                    String requestPath = "";
+
+                    if (method.isAnnotationPresent(PostMapping.class)) {
+                        requestMethod = "post";
+                        PostMapping methodMapping = method.getAnnotation(PostMapping.class);
+                        requestPath = methodMapping.value();
+                    } else if (method.isAnnotationPresent(GetMapping.class)) {
+                        requestMethod = "get";
+                        GetMapping methodMapping = method.getAnnotation(GetMapping.class);
+                        requestPath = methodMapping.value();
+                    } else {
                         continue;
                     }
 
-                    Action action = method.getAnnotation(Action.class);
-                    String actionValue = action.value();
-//                    if (!actionValue.matches("\\w+:/\\w/*")) {
-//                        continue;
-//                    }
+                    requestPath = classRequestPath + requestPath;
 
-                    String[] array = actionValue.split(":");
-                    if (!(array.length == 2)) {
-                        continue;
-                    }
-
-                    String requestMethod = array[0].toLowerCase();
-                    String requestPath = array[1];
                     Request request = new Request(requestMethod, requestPath);
                     Handler handler = new Handler(clz, method);
                     REQUEST_HANDLER_MAP.put(request, handler);
-
                 }
 
             }

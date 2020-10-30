@@ -6,10 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * todo 先参考《架构探险》用action注解处理请求，后面再改成类似spring boot的 PostMapping之类
+ *
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Action {
+public @interface RequestMapping {
     String value();
 }

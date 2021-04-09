@@ -1,27 +1,37 @@
 package org.xsmart.controller;
 
-import org.xsmart.system.annotation.Autowire;
-import org.xsmart.system.annotation.Controller;
-import org.xsmart.system.annotation.PostMapping;
-import org.xsmart.system.annotation.RequestMapping;
+import org.apache.log4j.Logger;
+import org.xsmart.enhance.annotation.Log1;
+import org.xsmart.enhance.annotation.Log2;
+import org.xsmart.system.annotation.*;
 import org.xsmart.system.entity.Data;
 import org.xsmart.model.User;
 import org.xsmart.service.UserService;
 import org.xsmart.system.util.RequestParams;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Controller
+@Log1
+@Log2
 @RequestMapping(value = "/user")
 public class UserController {
 
     @Autowire
     private UserService userService;
 
+    private Logger logger = Logger.getLogger(UserController.class);
+
+    @GetMapping(value = "/test")
+    public void test(RequestParams requestParams) {
+        logger.debug("----- test ----- ");
+    }
+
     @PostMapping(value = "/userList")
     public Data list(RequestParams requestParams) {
         UserService userService2 = userService;
-
+        ReentrantLock s;
         List<User> list = userService.list();
         return Data.success("获取列表成功").putData("list",list);
     }

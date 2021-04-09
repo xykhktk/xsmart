@@ -6,7 +6,6 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.log4j.Logger;
-import org.xsmart.aspect.ControllerAspect;
 import org.xsmart.system.util.PropsUtil;
 
 import java.sql.Connection;

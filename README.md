@@ -1,8 +1,9 @@
 撸一个超轻量的java MVC框架,支持IOC和AOP。
 
 ### 注解
-目前支持的注解有`Controller` `GetMapping` `PostMapping` `RequestMapping` `Autowire` `Aspect`  `Service`   
-用法上基本抄Spring MVC。
+#### MVC
+目前支持的注解有：`Controller` `GetMapping` `PostMapping` `RequestMapping` `Autowire` `Aspect`  `Service`   
+注解命名和用法上基本抄Spring MVC。
 ```
 @Controller
 @RequestMapping(value = "/user")
@@ -25,7 +26,14 @@ public class UserService {
 }
 ```
 
-AOP
+#### AOP
+如果有某类使用了某注解(例如@Controller)
+```
+@Controller
+public class UserController {
+}
+```
+则可用@Aspect(某注解)对此类进行织入
 ```
 @Aspect(Controller.class)
 public class ControllerAspect extends AspectProxy {
